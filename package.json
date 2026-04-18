@@ -1,0 +1,38 @@
+{
+  "name": "nano-js",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "exports": {
+    "import": "./lib/index.js",
+    "require": "./lib/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:devvime/nano-js.git"
+  },
+  "keywords": [
+    "SPA",
+    "routes",
+    "components",
+    "view-engine",
+    "template-engine",
+    "data-bindings",
+    "reactive-proxy"
+  ],
+  "author": "devvime",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devvime/nano-js/issues"
+  },
+  "homepage": "https://github.com/devvime/nano-js#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "sass": "^1.69.0",
+    "vite": "^8.0.8"
+  }
+}
