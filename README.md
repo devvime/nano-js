@@ -1,7 +1,3 @@
-Here is the translation of the documentation into English:
-
----
-
 # 📘 NanoJS - Basic Documentation
 
 This guide explains how to use the **NanoJS** framework based on the provided project.
