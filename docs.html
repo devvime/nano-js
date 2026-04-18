@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>NanoJS - Documentação Básica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3 {
+            color: #222;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #dcdcdc;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        code {
+            color: #4ec9b0;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <h1>📘 NanoJS - Documentação Básica</h1>
+      <p>Este guia explica como usar o framework <strong>NanoJS</strong> com
+        base no projeto fornecido.</p>
+
+      <div class="card">
+        <h2>🚀 Inicialização da Aplicação</h2>
+        <p>O arquivo principal <code>main.js</code> configura as rotas e inicia
+          o router:</p>
+
+        <pre><code>import { Router } from 'nanojs';
+import { Home } from './pages/Home.js';
+import { UserDetail } from './pages/UserDetail.js';
+
+const routes = [
+  { path: '/', component: Home },
+  { path: '/user/:id', component: UserDetail }
+];
+
+const router = new Router(routes, '#app');
+router.init();</code></pre>
+
+        <h3>Explicação:</h3>
+        <ul>
+          <li><strong>Router:</strong> Gerencia navegação SPA</li>
+          <li><strong>routes:</strong> Define caminhos e componentes</li>
+          <li><strong>#app:</strong> Elemento onde tudo será renderizado</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>🧩 Criando Componentes</h2>
+        <p>Componentes herdam da classe <code>Component</code>:</p>
+
+        <pre><code>import { Component } from 'nanojs';
+
+export class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state.name = 'Mestre do JS';
+    this.state.count = 0;
+  }
+}</code></pre>
+
+        <h3>State</h3>
+        <p>O <code>state</code> é reativo — ao alterar valores, a UI atualiza
+          automaticamente.</p>
+      </div>
+
+      <div class="card">
+        <h2>🎨 Renderização Declarativa</h2>
+        <p>O método <code>render()</code> retorna objetos JS que representam
+          HTML:</p>
+
+        <pre><code>render() {
+  return {
+    div: {
+      content: [
+        { h1: { content: this.state.title } },
+        { p: { content: 'Texto exemplo' } }
+      ]
+    }
+  };
+}</code></pre>
+
+        <h3>Regras:</h3>
+        <ul>
+          <li>Tags HTML são objetos (<code>div</code>, <code>p</code>, etc)</li>
+          <li><code>content</code> define conteúdo interno</li>
+          <li>Pode ser string, array ou outro objeto</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>⚡ Eventos</h2>
+        <p>Eventos são definidos diretamente como funções:</p>
+
+        <pre><code>{
+  button: {
+    content: 'Clique',
+    onclick: () => alert('Clicou!')
+  }
+}</code></pre>
+
+        <h3>Exemplo com input:</h3>
+
+        <pre><code>{
+  input: {
+    type: 'text',
+    value: this.state.newTask,
+    oninput: e => this.state.newTask = e.target.value
+  }
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>📌 Manipulação de Lista</h2>
+        <p>Use <code>map()</code> para renderizar listas:</p>
+
+        <pre><code>{
+  ul: {
+    content: this.state.tasks.map(task => ({
+      li: { content: task.title }
+    }))
+  }
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>➕ Exemplo: Adicionar Task</h2>
+
+        <pre><code>addNewTask() {
+  if (this.state.newTask.trim() === '') return;
+
+  const newTask = {
+    id: Date.now(),
+    title: this.state.newTask
+  };
+
+  this.state.tasks = [...this.state.tasks, newTask];
+  this.state.newTask = '';
+}</code></pre>
+
+        <p>Isso atualiza automaticamente a interface.</p>
+      </div>
+
+      <div class="card">
+        <h2>🔗 Navegação SPA</h2>
+        <p>Use <code>data-link</code> para navegação sem reload:</p>
+
+        <pre><code>{
+  a: {
+    href: '/user/37',
+    content: 'User page',
+    'data-link': true
+  }
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>👤 Parâmetros de Rota</h2>
+        <p>Rotas com parâmetros:</p>
+
+        <pre><code>{ path: '/user/:id', component: UserDetail }</code></pre>
+
+        <p>Capturando o parâmetro:</p>
+
+        <pre><code>constructor(props) {
+  super(props);
+  this.state.userId = props.params[0];
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>📄 Página de Detalhes</h2>
+
+        <pre><code>render() {
+  return {
+    div: {
+      content: [
+        { h1: { content: 'Detalhes do Usuário' } },
+        {
+          p: {
+            content: [
+              'ID: ',
+              { b: { content: this.state.userId } }
+            ]
+          }
+        }
+      ]
+    }
+  };
+}</code></pre>
+      </div>
+
+      <div class="card">
+        <h2>✅ Conclusão</h2>
+        <ul>
+          <li>Framework leve e declarativo</li>
+          <li>Sem HTML direto — tudo via JS</li>
+          <li>State reativo automático</li>
+          <li>SPA com roteamento integrado</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </body>
+</html>
